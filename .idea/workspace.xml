@@ -13,6 +13,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="844c6b00-4096-4c99-850c-7bf679b5f872" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/expEval.dir/main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/expEval.dir/main.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/expEval" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/expEval" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -29,11 +32,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="399" column="29" selection-start-line="399" selection-start-column="29" selection-end-line="399" selection-end-column="29" />
+            <state relative-caret-position="-5939">
+              <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
               <folding>
-                <element signature="e#0#983#0" />
-                <element signature="e#985#1003#0" expanded="true" />
+                <element signature="e#997#1015#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,6 +55,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -121,7 +128,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23311000" />
+    <option name="totallyTimeSpent" value="25698000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -141,7 +148,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.9056399" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3072747" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -150,7 +157,7 @@
       <window_info anchor="bottom" id="Messages" order="8" weight="0.329718" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32899022" />
       <window_info anchor="bottom" id="CMake" order="12" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -167,11 +174,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="399" column="29" selection-start-line="399" selection-start-column="29" selection-end-line="399" selection-end-column="29" />
+        <state relative-caret-position="-5939">
+          <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
           <folding>
-            <element signature="e#0#983#0" />
-            <element signature="e#985#1003#0" expanded="true" />
+            <element signature="e#997#1015#0" expanded="true" />
           </folding>
         </state>
       </provider>

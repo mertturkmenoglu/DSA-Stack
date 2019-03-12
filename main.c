@@ -22,6 +22,8 @@
  *      (12 + 4 - 3 ) * (7 * 2 + 5) = 247
  *      21  /  ((4 + 8 ) * 2  -  17) = 3
  *
+ *      4 - (3 + 5 + 6 * 2) + 17 = 1
+ *
  * @author Mert Turkmenoglu
  * @date 13.03.2019
  */
@@ -78,6 +80,8 @@ typedef struct {
 
 typedef int BOOLEAN;
 
+
+
 // Function prototypes
 void initStack(STACK *, enum STACK_TYPE);
 
@@ -93,11 +97,17 @@ BOOLEAN peek(void *, const STACK *);
 
 void printStack(const STACK *);
 
-int evaluateExpression(const char *, STACK *, STACK *);
+void printStackStatus(const STACK *, const STACK*);
 
 void deleteStack(STACK *);
 
 void finalize(STACK *s, ...);
+
+int evaluateExpression(const char *, STACK *, STACK *);
+
+void operatorEval(char c, char tmp, BOOLEAN flag, STACK *operator, STACK *operand);
+
+void operate(char c, char tmp, enum PRECEDENCE p, BOOLEAN flag, STACK *operator, STACK *operand);
 
 enum CHAR_TYPE typeOfChar(char c);
 
@@ -107,11 +117,10 @@ int digitHandler(const char *exp, int *i);
 
 void executeOperation(STACK *operator, STACK *operand);
 
-void printStackStatus(const STACK *, const STACK*);
-
 int toInt(const char *str);
 
 extern int errno;
+
 
 
 /**
@@ -282,21 +291,29 @@ void punctEval(char c, STACK *operator, STACK *operand) {
         return;
     }
 
+    operatorEval(c, tmp, flag, operator, operand);
+}
+
+void operatorEval(char c, char tmp, BOOLEAN flag, STACK *operator, STACK *operand) {
     if (!isEmpty(operator)) {
         peek(&tmp, operator);
         if ((tmp != '(') && (tmp != ')')) {
             enum PRECEDENCE p = compare(c, tmp);
-            while (((p == LOWER) || (p == EQUAL)) && (flag)) {
-                executeOperation(operator, operand);
-                flag = peek(&tmp, operator) ? TRUE : FALSE;
-                if ((tmp != '(') && (tmp != ')'))
-                    p = compare(c, tmp);
-                else
-                    flag = FALSE;
-            }
+            operate(c, tmp, p, flag, operator, operand);
         }
     }
     push(&c, operator);
+}
+
+void operate(char c, char tmp, enum PRECEDENCE p, BOOLEAN flag, STACK *operator, STACK *operand) {
+    while (((p == LOWER) || (p == EQUAL)) && (flag)) {
+        executeOperation(operator, operand);
+        flag = peek(&tmp, operator) ? TRUE : FALSE;
+        if ((tmp != '(') && (tmp != ')'))
+            p = compare(c, tmp);
+        else
+            flag = FALSE;
+    }
 }
 
 enum PRECEDENCE compare(char inp, char peek) {
@@ -414,6 +431,7 @@ int evaluateExpression(const char *exp, STACK *operand, STACK *operator) {
         executeOperation(operator, operand);
         printStackStatus(operand, operator);
     }
+
     // Return operand->item[0]
     return *((int *) (operand->item));
 }
@@ -490,13 +508,13 @@ void printStackStatus(const STACK *operand, const STACK *operator) {
 }
 
 int toInt(const char *str) {
-    int n = 0;
+    int len = 0;
     int i = 0;
-    while(str[n++] != '\0');
-    n--;
+    while(str[len++] != '\0');
+    len--;
     int result=0;
 
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < len; i++) {
         result *= 10;
         result += str[i] - '0';
     }
