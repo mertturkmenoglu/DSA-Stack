@@ -16,11 +16,11 @@
  * responsibility.
  *
  * Some test(example) cases:
- *      13 + 5* (6+8/4)
- *      8 + 2 * (21 / (7 – 4) + 2)
- *      5 + 3 * 10 / 6 – 2
- *      (12 + 4 - 3 ) * (7 * 2 + 5)
- *      21  /  ((4 + 8 ) * 2  –  17)
+ *      13 + 5* (6+8/4) = 53
+ *      8 + 2 * (21 / (7 - 4) + 2) = 26
+ *      5 + 3 * 10 / 6 - 2 = 8
+ *      (12 + 4 - 3 ) * (7 * 2 + 5) = 247
+ *      21  /  ((4 + 8 ) * 2  -  17) = 3
  *
  * @author Mert Turkmenoglu
  * @date 13.03.2019
@@ -108,6 +108,8 @@ int digitHandler(const char *exp, int *i);
 void executeOperation(STACK *operator, STACK *operand);
 
 void printStackStatus(const STACK *, const STACK*);
+
+int toInt(const char *str);
 
 extern int errno;
 
@@ -287,17 +289,14 @@ void punctEval(char c, STACK *operator, STACK *operand) {
             while (((p == LOWER) || (p == EQUAL)) && (flag)) {
                 executeOperation(operator, operand);
                 flag = peek(&tmp, operator) ? TRUE : FALSE;
-                if((tmp != '(')&&(tmp != ')'))
+                if ((tmp != '(') && (tmp != ')'))
                     p = compare(c, tmp);
                 else
                     flag = FALSE;
             }
         }
-        push(&c, operator);
-    } else {
-        push(&c, operator);
     }
-
+    push(&c, operator);
 }
 
 enum PRECEDENCE compare(char inp, char peek) {
@@ -375,7 +374,7 @@ int digitHandler(const char *exp, int *i) {
         strcat(str, tmp);
         *i += 1;
     }
-    int intRep = atoi(str);
+    int intRep = toInt(str);
     return intRep;
 }
 
@@ -488,4 +487,19 @@ void printStackStatus(const STACK *operand, const STACK *operator) {
     printStack(operand);
     printStack(operator);
     printf("-----------\n");
+}
+
+int toInt(const char *str) {
+    int n = 0;
+    int i = 0;
+    while(str[n++] != '\0');
+    n--;
+    int result=0;
+
+    for(i = 0; i < n; i++) {
+        result *= 10;
+        result += str[i] - '0';
+    }
+
+    return result;
 }
