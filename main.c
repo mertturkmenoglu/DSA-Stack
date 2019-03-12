@@ -23,6 +23,8 @@
  *      21  /  ((4 + 8 ) * 2  -  17) = 3
  *
  *      4 - (3 + 5 + 6 * 2) + 17 = 1
+ *      -4 + 8 = 4
+ *      5*(-4*2) = -40
  *
  * @author Mert Turkmenoglu
  * @date 13.03.2019
@@ -39,6 +41,10 @@
 #define MAX_INPUT_SIZE 100
 #define FALSE 0
 #define TRUE 1
+
+enum OPERATION_TYPE {
+    OPERAND, OPERATOR
+};
 
 /*
  * Every stack has a type field.
@@ -121,6 +127,9 @@ int toInt(const char *str);
 
 extern int errno;
 
+enum OPERATION_TYPE LAST_OPERATION;
+
+BOOLEAN NEGATIVE_FLAG = FALSE;
 
 
 /**
@@ -287,9 +296,15 @@ void executeOperation(STACK *operator, STACK *operand) {
  */
 void punctEval(char c, STACK *operator, STACK *operand) {
     char tmp = 'a';
-     
+
+    if((c == '-') && (LAST_OPERATION == OPERATOR)) {
+        LAST_OPERATION = OPERAND;
+        NEGATIVE_FLAG = TRUE;
+        return;
+    }
     // If it is opening parenthesis, push to stack
     if (c == '(') {
+        LAST_OPERATION = OPERATOR;
         push(&c, operator);
         return;
     }
@@ -470,6 +485,10 @@ int evaluateExpression(const char *exp, STACK *operand, STACK *operator) {
     // Take the string length
     size_t len = strlen(exp);
     int i = 0;
+    if(exp[i] == '-') {
+        NEGATIVE_FLAG = TRUE;
+        i++;
+    }
     enum CHAR_TYPE charType;
     int tmp;
 
@@ -481,11 +500,18 @@ int evaluateExpression(const char *exp, STACK *operand, STACK *operator) {
                 break;
             case DIGIT:
                 tmp = digitHandler(exp, &i);
+                if(NEGATIVE_FLAG) {
+                    NEGATIVE_FLAG = FALSE;
+
+                    tmp = -tmp;
+                }
+                LAST_OPERATION = OPERAND;
                 push(&tmp, operand);
                 printStackStatus(operand, operator);
                 break;
             case PUNCTUATION:
                 punctEval(exp[i], operator, operand);
+                //LAST_OPERATION = OPERATOR;
                 printStackStatus(operand, operator);
                 i++;
                 break;
