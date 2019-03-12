@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mert/codes/c/expEval/main.c
+stdio.h
+-
+stdlib.h
+-
+errno.h
+-
+string.h
+-
+ctype.h
+-
+stdarg.h
+-
+
