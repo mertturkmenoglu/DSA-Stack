@@ -89,11 +89,11 @@ BOOLEAN isEmpty(const STACK *stack);
 
 BOOLEAN isFull(const STACK *stack);
 
-BOOLEAN push(void *value, STACK *stack);
+BOOLEAN push(void *x, STACK *stack);
 
-BOOLEAN pop(void *value, STACK *stack);
+BOOLEAN pop(void *x, STACK *stack);
 
-BOOLEAN peek(void *value, const STACK *stack);
+BOOLEAN peek(void *x, const STACK *stack);
 
 void printStack(const STACK *stack);
 
@@ -287,8 +287,7 @@ void executeOperation(STACK *operator, STACK *operand) {
  */
 void punctEval(char c, STACK *operator, STACK *operand) {
     char tmp = 'a';
-
-
+     
     // If it is opening parenthesis, push to stack
     if (c == '(') {
         push(&c, operator);
