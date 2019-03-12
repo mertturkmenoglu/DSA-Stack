@@ -83,35 +83,35 @@ typedef int BOOLEAN;
 
 
 // Function prototypes
-void initStack(STACK *, enum STACK_TYPE);
+void initStack(STACK *stack, enum STACK_TYPE type);
 
-BOOLEAN isEmpty(const STACK *);
+BOOLEAN isEmpty(const STACK *stack);
 
-BOOLEAN isFull(const STACK *);
+BOOLEAN isFull(const STACK *stack);
 
-BOOLEAN push(void *, STACK *);
+BOOLEAN push(void *value, STACK *stack);
 
-BOOLEAN pop(void *, STACK *);
+BOOLEAN pop(void *value, STACK *stack);
 
-BOOLEAN peek(void *, const STACK *);
+BOOLEAN peek(void *value, const STACK *stack);
 
-void printStack(const STACK *);
+void printStack(const STACK *stack);
 
-void printStackStatus(const STACK *, const STACK*);
+void printStackStatus(const STACK *operand, const STACK *operator);
 
-void deleteStack(STACK *);
+void deleteStack(STACK *stack);
 
-void finalize(STACK *s, ...);
+void finalize(STACK *stack, ...);
 
-int evaluateExpression(const char *, STACK *, STACK *);
+int evaluateExpression(const char *exp, STACK *operand, STACK *operator);
 
-void operatorEval(char c, char tmp, BOOLEAN flag, STACK *operator, STACK *operand);
+void operatorEval(char c, STACK *operator, STACK *operand);
 
-void operate(char c, char tmp, enum PRECEDENCE p, BOOLEAN flag, STACK *operator, STACK *operand);
+void operate(char c, char peek, enum PRECEDENCE p, BOOLEAN flag, STACK *operator, STACK *operand);
 
 enum CHAR_TYPE typeOfChar(char c);
 
-enum PRECEDENCE compare(char inp, char peek);
+enum PRECEDENCE compare(char input, char peekValue);
 
 int digitHandler(const char *exp, int *i);
 
@@ -242,12 +242,15 @@ enum CHAR_TYPE typeOfChar(char c) {
 }
 
 
-// TODO: COMMENT
+
 /**
  * executeOperation function
- *
- * @param operator
- * @param operand
+ * This function pops two operand and pops one operator from stacks
+ * and does mathematical operation, pushes result back to operand stack
+ * Function contains pop and push function calls. Before calling this function,
+ * you must not pop or push any value.
+ * @param operator is the pointer to operator stack
+ * @param operand is the pointer to operand stack
  */
 void executeOperation(STACK *operator, STACK *operand) {
     int a, b, result;
@@ -273,15 +276,27 @@ void executeOperation(STACK *operator, STACK *operand) {
     push(&result, operand);
 }
 
+
+
+/**
+ * punctEval function
+ * This function evaluates punctuation characters.
+ * @param c is the punctuation character
+ * @param operator is the pointer to operator stack
+ * @param operand is the pointer to operand stack
+ */
 void punctEval(char c, STACK *operator, STACK *operand) {
     char tmp = 'a';
-    BOOLEAN flag = TRUE;
 
+
+    // If it is opening parenthesis, push to stack
     if (c == '(') {
         push(&c, operator);
         return;
     }
 
+    // If it is closing parenthesis, execute all operations
+    // until relative opening parenthesis
     if (c == ')') {
         while (tmp != '(') {
             executeOperation(operator, operand);
@@ -291,10 +306,24 @@ void punctEval(char c, STACK *operator, STACK *operand) {
         return;
     }
 
-    operatorEval(c, tmp, flag, operator, operand);
+    // If it is not a parenthesis then it is an operator
+    operatorEval(c, operator, operand);
 }
 
-void operatorEval(char c, char tmp, BOOLEAN flag, STACK *operator, STACK *operand) {
+
+
+/**
+ * operatorEval function
+ * This function evaluates operations. For every operator state,
+ * function checks and calls appropriate functions
+ * @param c is the operator character
+ * @param operator is the pointer to operator stack
+ * @param operand is the pointer to operand stack
+ */
+void operatorEval(char c, STACK *operator, STACK *operand) {
+    char tmp = 'a';
+    BOOLEAN flag = TRUE;
+
     if (!isEmpty(operator)) {
         peek(&tmp, operator);
         if ((tmp != '(') && (tmp != ')')) {
@@ -305,20 +334,41 @@ void operatorEval(char c, char tmp, BOOLEAN flag, STACK *operator, STACK *operan
     push(&c, operator);
 }
 
-void operate(char c, char tmp, enum PRECEDENCE p, BOOLEAN flag, STACK *operator, STACK *operand) {
+
+
+/**
+ * operate function
+ * This function handles operation execution order.
+ * @param c is the operator character
+ * @param peekValue is the top character on the operator stack
+ * @param p is the precedence of the two operator
+ * @param flag controls if pop operation happened
+ * @param operator is the pointer to operator stack
+ * @param operand is the pointer to operand stack
+ */
+void operate(char c, char peekValue, enum PRECEDENCE p, BOOLEAN flag, STACK *operator, STACK *operand) {
     while (((p == LOWER) || (p == EQUAL)) && (flag)) {
         executeOperation(operator, operand);
-        flag = peek(&tmp, operator) ? TRUE : FALSE;
-        if ((tmp != '(') && (tmp != ')'))
-            p = compare(c, tmp);
+        flag = peek(&peekValue, operator) ? TRUE : FALSE;
+        if ((peekValue != '(') && (peekValue != ')'))
+            p = compare(c, peekValue);
         else
             flag = FALSE;
     }
 }
 
-enum PRECEDENCE compare(char inp, char peek) {
-    if (inp == '/') {
-        switch (peek) {
+
+
+/**
+ * compare function
+ * This function compares given two operator.
+ * @param input is the character read from input string
+ * @param peekValue is the character at the top of the stack
+ * @return enum PRECEDENCE of the input character
+ */
+enum PRECEDENCE compare(char input, char peekValue) {
+    if (input == '/') {
+        switch (peekValue) {
             case '/':
                 return EQUAL;
             case '*':
@@ -332,8 +382,8 @@ enum PRECEDENCE compare(char inp, char peek) {
         }
     }
 
-    if (inp == '*') {
-        switch (peek) {
+    if (input == '*') {
+        switch (peekValue) {
             case '/':
                 return EQUAL;
             case '*':
@@ -347,8 +397,8 @@ enum PRECEDENCE compare(char inp, char peek) {
         }
     }
 
-    if (inp == '+') {
-        switch (peek) {
+    if (input == '+') {
+        switch (peekValue) {
             case '/':
                 return LOWER;
             case '*':
@@ -362,8 +412,8 @@ enum PRECEDENCE compare(char inp, char peek) {
         }
     }
 
-    if (inp == '-') {
-        switch (peek) {
+    if (input == '-') {
+        switch (peekValue) {
             case '/':
                 return LOWER;
             case '*':
@@ -380,6 +430,16 @@ enum PRECEDENCE compare(char inp, char peek) {
     return HIGHER;
 }
 
+
+
+/**
+ * digitHandler function
+ * This function finds the integer number as a string in a
+ * given string and returns its integer equivalent
+ * @param exp is the expression string
+ * @param i is the pointer to index number of the starting character
+ * @return integer equivalent of the string
+ */
 int digitHandler(const char *exp, int *i) {
     size_t len = strlen(exp);
     char str[MAX_INPUT_SIZE];
@@ -395,6 +455,18 @@ int digitHandler(const char *exp, int *i) {
     return intRep;
 }
 
+
+
+/**
+ * evaluateExpression function
+ * This function is the main evaluation function.
+ * All evaluation functions are called from this function.
+ * @throws Input/Output error when invalid character is encountered
+ * @param exp is the expression string
+ * @param operand is the pointer to operand stack
+ * @param operator is the pointer to operator stack
+ * @return result of the mathematical operations
+ */
 int evaluateExpression(const char *exp, STACK *operand, STACK *operator) {
     // Take the string length
     size_t len = strlen(exp);
@@ -427,6 +499,7 @@ int evaluateExpression(const char *exp, STACK *operand, STACK *operator) {
         }
     }
 
+    // If any operation left, do operations until operand stack has 1 value
     while (operand->top != 1) {
         executeOperation(operator, operand);
         printStackStatus(operand, operator);
@@ -436,6 +509,16 @@ int evaluateExpression(const char *exp, STACK *operand, STACK *operator) {
     return *((int *) (operand->item));
 }
 
+
+
+/**
+ * initStack function
+ * This function initialize stack given as a pointer
+ * with its data type. Stack is simulated over array structure.
+ * Array is dynamically allocated and its type is depends on type of t
+ * @param s is the stack pointer
+ * @param t is the enumeration type of the stack
+ */
 void initStack(STACK *s, enum STACK_TYPE t) {
     s->type = t;
     if (s->type == INT)
@@ -445,14 +528,42 @@ void initStack(STACK *s, enum STACK_TYPE t) {
     s->top = 0;
 }
 
+
+
+/**
+ * isEmpty function
+ * This function controls top field of the given stack
+ * and returns TRUE if top indicates 0 else FALSE
+ * @param s is the stack pointer
+ * @return TRUE if SP is 0 else FALSE
+ */
 BOOLEAN isEmpty(const STACK *s) {
     return (s->top == 0) ? TRUE : FALSE;
 }
 
+
+
+/**
+ * isFull function
+ * This function controls top field of the given stack
+ * and returns TRUE if top indicates MAX_STACK_SIZE else FALSE
+ * @param s is the stack pointer
+ * @return TRUE if SP is MAX_STACK_SIZE else FALSE
+ */
 BOOLEAN isFull(const STACK *s) {
     return (s->top == MAX_STACK_SIZE) ? TRUE : FALSE;
 }
 
+
+
+/**
+ * push function
+ * This function appends given value to array field of the stack
+ *
+ * @param x is the pointer of the variable which holds value appended to array
+ * @param s is the pointer to stack
+ * @return TRUE if stack is not full else FALSE
+ */
 BOOLEAN push(void *x, STACK *s) {
     if (isFull(s) == FALSE) {
         if (s->type == INT)
@@ -464,6 +575,16 @@ BOOLEAN push(void *x, STACK *s) {
     return FALSE;
 }
 
+
+
+/**
+ * pop function
+ * This function takes top value of array field of the stack
+ *
+ * @param x is the pointer of the variable which will hold value taken from array
+ * @param s is the pointer to stack
+ * @return TRUE if stack is not empty else FALSE
+ */
 BOOLEAN pop(void *x, STACK *s) {
     if (isEmpty(s) == FALSE) {
         s->top -= 1;
@@ -477,6 +598,16 @@ BOOLEAN pop(void *x, STACK *s) {
     return FALSE;
 }
 
+
+
+/**
+ * peek function
+ * This function reads top value of array field of the stack
+ *
+ * @param x is the pointer of the variable which will hold value read from array
+ * @param s is the pointer to stack
+ * @return TRUE if stack is not empty else FALSE
+ */
 BOOLEAN peek(void *x, const STACK *s) {
     if (isEmpty(s) == FALSE) {
         if (s->type == INT)
@@ -488,6 +619,13 @@ BOOLEAN peek(void *x, const STACK *s) {
     return FALSE;
 }
 
+
+
+/**
+ * printStack function
+ * This function prints given stack and its values
+ * @param s is the pointer to stack
+ */
 void printStack(const STACK *s) {
     int i;
     printf("\nStack: \n");
@@ -501,12 +639,30 @@ void printStack(const STACK *s) {
     printf("\n");
 }
 
+
+
+/**
+ * printStackStatus function
+ * This function calls printStack function and prints styling
+ * characters to terminal.
+ * This function is called whenever a stack operation happens.
+ * @param operand is the pointer to operand stack
+ * @param operator is the pointer to operator stack
+ */
 void printStackStatus(const STACK *operand, const STACK *operator) {
     printStack(operand);
     printStack(operator);
     printf("-----------\n");
 }
 
+
+
+/**
+ * toInt function
+ * This function finds integer equivalent of the given string
+ * @param str is the given string
+ * @return integer equivalent of the given string
+ */
 int toInt(const char *str) {
     int len = 0;
     int i = 0;
