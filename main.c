@@ -107,7 +107,7 @@ int digitHandler(const char *exp, int *i);
 
 void executeOperation(STACK *operator, STACK *operand);
 
-void printStackStatus(STACK *s, ...);
+void printStackStatus(const STACK *, const STACK*);
 
 extern int errno;
 
@@ -395,12 +395,11 @@ int evaluateExpression(const char *exp, STACK *operand, STACK *operator) {
             case DIGIT:
                 tmp = digitHandler(exp, &i);
                 push(&tmp, operand);
-//                printStackStatus(operand, operator);
+                printStackStatus(operand, operator);
                 break;
             case PUNCTUATION:
-                //push(&exp[i], operator);
                 punctEval(exp[i], operator, operand);
-//                printStackStatus(operand, operator);
+                printStackStatus(operand, operator);
                 i++;
                 break;
             case WRONG:
@@ -414,7 +413,7 @@ int evaluateExpression(const char *exp, STACK *operand, STACK *operator) {
 
     while (operand->top != 1) {
         executeOperation(operator, operand);
-//        printStackStatus(operand, operator);
+        printStackStatus(operand, operator);
     }
     // Return operand->item[0]
     return *((int *) (operand->item));
@@ -485,14 +484,8 @@ void printStack(const STACK *s) {
     printf("\n");
 }
 
-void printStackStatus(STACK *s, ...) {
-    va_list valist;
-    va_start(valist, s);
-    STACK *tmp = s;
-    while (tmp != NULL) {
-        printStack(tmp);
-        tmp = va_arg(valist, STACK*);
-    }
-    va_end(valist);
+void printStackStatus(const STACK *operand, const STACK *operator) {
+    printStack(operand);
+    printStack(operator);
     printf("-----------\n");
 }
