@@ -59,10 +59,10 @@ RM = /home/mert/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/183.5429.37/bin/c
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mert/codes/c/expEval
+CMAKE_SOURCE_DIR = /home/mert/DSA-Stack
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mert/codes/c/expEval/cmake-build-debug
+CMAKE_BINARY_DIR = /home/mert/DSA-Stack/cmake-build-debug
 
 #=============================================================================
 # Target rules for target CMakeFiles/expEval.dir
@@ -71,7 +71,7 @@ CMAKE_BINARY_DIR = /home/mert/codes/c/expEval/cmake-build-debug
 CMakeFiles/expEval.dir/all:
 	$(MAKE) -f CMakeFiles/expEval.dir/build.make CMakeFiles/expEval.dir/depend
 	$(MAKE) -f CMakeFiles/expEval.dir/build.make CMakeFiles/expEval.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mert/codes/c/expEval/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target expEval"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mert/DSA-Stack/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target expEval"
 .PHONY : CMakeFiles/expEval.dir/all
 
 # Include target in all.
@@ -81,9 +81,9 @@ all: CMakeFiles/expEval.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/expEval.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mert/codes/c/expEval/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mert/DSA-Stack/cmake-build-debug/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/expEval.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mert/codes/c/expEval/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mert/DSA-Stack/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/expEval.dir/rule
 
 # Convenience name for target.

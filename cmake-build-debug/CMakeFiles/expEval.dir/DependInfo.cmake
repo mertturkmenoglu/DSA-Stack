@@ -4,7 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/mert/codes/c/expEval/main.c" "/home/mert/codes/c/expEval/cmake-build-debug/CMakeFiles/expEval.dir/main.c.o"
+  "/home/mert/DSA-Stack/main.c" "/home/mert/DSA-Stack/cmake-build-debug/CMakeFiles/expEval.dir/main.c.o"
+  "/home/mert/DSA-Stack/stack.c" "/home/mert/DSA-Stack/cmake-build-debug/CMakeFiles/expEval.dir/stack.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

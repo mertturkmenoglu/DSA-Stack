@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/mert/codes/c/expEval/main.c
+/home/mert/DSA-Stack/main.c
 stdio.h
 -
 stdlib.h
@@ -19,4 +19,24 @@ ctype.h
 -
 stdarg.h
 -
+stack.h
+/home/mert/DSA-Stack/stack.h
+
+/home/mert/DSA-Stack/stack.c
+stack.h
+/home/mert/DSA-Stack/stack.h
+stdio.h
+-
+stdlib.h
+-
+errno.h
+-
+string.h
+-
+ctype.h
+-
+stdarg.h
+-
+
+/home/mert/DSA-Stack/stack.h
 

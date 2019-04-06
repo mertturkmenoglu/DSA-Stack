@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/expEval.dir/main.c.o"
+  "CMakeFiles/expEval.dir/stack.c.o"
   "expEval.pdb"
   "expEval"
 )

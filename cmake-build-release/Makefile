@@ -48,10 +48,10 @@ RM = /home/mert/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/183.5429.37/bin/c
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mert/codes/c/expEval
+CMAKE_SOURCE_DIR = /home/mert/DSA-Stack
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mert/codes/c/expEval/cmake-build-release
+CMAKE_BINARY_DIR = /home/mert/DSA-Stack/cmake-build-release
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mert/codes/c/expEval/cmake-build-release/CMakeFiles /home/mert/codes/c/expEval/cmake-build-release/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mert/DSA-Stack/cmake-build-release/CMakeFiles /home/mert/DSA-Stack/cmake-build-release/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mert/codes/c/expEval/cmake-build-release/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mert/DSA-Stack/cmake-build-release/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -150,6 +150,33 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/expEval.dir/build.make CMakeFiles/expEval.dir/main.c.s
 .PHONY : main.c.s
 
+stack.o: stack.c.o
+
+.PHONY : stack.o
+
+# target to build an object file
+stack.c.o:
+	$(MAKE) -f CMakeFiles/expEval.dir/build.make CMakeFiles/expEval.dir/stack.c.o
+.PHONY : stack.c.o
+
+stack.i: stack.c.i
+
+.PHONY : stack.i
+
+# target to preprocess a source file
+stack.c.i:
+	$(MAKE) -f CMakeFiles/expEval.dir/build.make CMakeFiles/expEval.dir/stack.c.i
+.PHONY : stack.c.i
+
+stack.s: stack.c.s
+
+.PHONY : stack.s
+
+# target to generate assembly for a file
+stack.c.s:
+	$(MAKE) -f CMakeFiles/expEval.dir/build.make CMakeFiles/expEval.dir/stack.c.s
+.PHONY : stack.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -162,6 +189,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... stack.o"
+	@echo "... stack.i"
+	@echo "... stack.s"
 .PHONY : help
 
 

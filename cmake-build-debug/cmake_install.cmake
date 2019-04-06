@@ -1,4 +1,4 @@
-# Install script for directory: /home/mert/codes/c/expEval
+# Install script for directory: /home/mert/DSA-Stack
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/mert/codes/c/expEval/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/mert/DSA-Stack/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
